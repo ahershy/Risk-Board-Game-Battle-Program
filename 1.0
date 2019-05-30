@@ -1,0 +1,187 @@
+#modules
+import random
+from scipy.stats import rankdata
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+#enter starting armies here
+a_army = 20000
+d_army = 22000
+
+#creating lists for array later
+attack_log = [a_army]
+def_log = [d_army]
+
+print "Starting attack army: " +str(a_army) + "Starting defend army: " + str(d_army)
+
+#creating while statement
+while a_army >1 or d_army >0:
+    
+    #die roll
+    a_die_1 = random.randint(1,6)
+    a_die_2 = random.randint(1,6)
+    a_die_3 = random.randint(1,6)
+    d_die_1 = random.randint(1,6)
+    d_die_2 = random.randint(1,6)
+ 
+    #combining all sets of dice   
+    full_a = [a_die_1, a_die_2, a_die_3]
+    full_a.sort(reverse=True)
+    mid_a = [a_die_1,a_die_2]
+    mid_a.sort(reverse=True)
+    min_a = [a_die_1]
+    full_d = [d_die_1, d_die_2]
+    full_d.sort(reverse=True)
+    min_d = [d_die_1]
+    
+    #attacker 3 and defender 2
+    if a_army > 3 and d_army > 2:
+        if full_a[0]>full_d[0] and full_a[1]>full_d[1] :
+            d_army -= 2
+            print "attack roll: " + str(full_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif full_a[0]<=full_d[0] and full_a[1]<=full_d[1]:
+            a_army -= 2
+            print "attack roll: " + str(full_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif full_a[0]>full_d[0] and full_a[1]<=full_d[1]:
+            a_army -= 1
+            d_army -= 1
+            print "attack roll: " + str(full_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif full_a[0]<=full_d[0] and full_a[1]>full_d[1]:
+            a_army -= 1
+            d_army -= 1
+            print "attack roll: " + str(full_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        else:
+            pass
+    #attacker 2 and defender 2
+    elif 2<a_army<4 and d_army > 2:
+        if mid_a[0]>full_d[0] and mid_a[1]>full_d[1] :
+            d_army -= 2
+            print "attack roll: " + str(mid_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif mid_a[0]<=full_d[0] and mid_a[1]<=full_d[1]:
+            a_army -= 2
+            print "attack roll: " + str(mid_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif mid_a[0]>full_d[0] and mid_a[1]<=full_d[1]:
+            a_army -= 1
+            d_army -= 1
+            print "attack roll: " + str(mid_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif mid_a[0]<=full_d[0] and mid_a[1]>full_d[1]:
+            a_army -= 1
+            d_army -= 1
+            print "attack roll: " + str(mid_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        else:
+            pass
+    #attacker 1 and defender 2
+    elif 1<a_army<3 and d_army > 2:
+        if min_a[0]>full_d[0]:
+            d_army -= 1
+            print "attack roll: " + str(min_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif min_a[0]<=full_d[0]:
+            a_army -= 1
+            print "attack roll: " + str(min_a) + "/ defend roll : " + str(full_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        else:
+            pass
+    #attacker 3 and defender 1 
+    elif a_army > 3 and 0<d_army<2:
+        if full_a[0]>min_d[0]:
+            d_army -= 1
+            print "attack roll: " + str(full_a) + "/ defend roll : " + str(min_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif full_a[0]<=min_d[0]:
+            a_army -= 1
+            print "attack roll: " + str(full_a) + "/ defend roll : " + str(min_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        else:
+            pass   
+        
+    #attacker 2 and defender 1
+    elif 2<a_army<4 and 0<d_army<2:
+        if mid_a[0]>min_d[0]:
+            d_army -= 1
+            print "attack roll: " + str(mid_a) + "/ defend roll : " + str(min_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif mid_a[0]<=min_d[0]:
+            a_army -= 1
+            print "attack roll: " + str(mid_a) + "/ defend roll : " + str(min_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        else:
+            pass 
+        
+    #attacker 1 and defender 1
+    elif 1<a_army<3 and 0<d_army<2:
+        if min_a[0]>min_d[0]:
+            d_army -= 1
+            print "attack roll: " + str(min_a) + "/ defend roll : " + str(min_d)
+            print "attack army: " + str(a_army) + "defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        elif min_a[0]<=min_d[0]:
+            a_army -= 1
+            print "attack roll: " + str(min_a) + "/ defend roll : " + str(min_d)
+            print "attack army: " + str(a_army) + "/ defend army : " + str(d_army)
+            def_log.append(d_army)
+            attack_log.append(a_army)
+        else:
+            pass  
+    #done
+    else:
+        break
+        
+print "Ending attack army: " +str(a_army) + "Ending defend army: " + str(d_army)
+        
+#creating array and total_log
+attack_log = np.array(attack_log)
+def_log = np.array(def_log)
+
+total_log = pd.DataFrame({ 'Attacking Army': attack_log, 'Defending Army': def_log})
+total_log
+    
+#total army losses
+total_log.plot(figsize=(10, 5))
+
+#normalized army losses
+(total_log / total_log.iloc[0] * 1).plot(figsize=(10, 5))
+    
+ #percentage change per interation in armies
+turn_percent_change = np.log(total_log/total_log.shift(1))
+turn_percent_change.plot(figsize=(10, 5))
+
+        
